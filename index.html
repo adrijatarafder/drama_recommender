@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drama Recommender</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>🎬 Find a Drama You'll Enjoy</h1>
+
+<h3>What are you in the mood for?</h3>
+<div id="genres">
+    {% for g in genres %}
+        <label>
+            <input type="checkbox" value="{{ g }}"> {{ g }}
+        </label>
+    {% endfor %}
+</div>
+
+<h3>Have you watched anything similar?</h3>
+
+<label>
+    <input type="checkbox" id="coldUser">
+    I have never watched anything like this before
+</label>
+
+<br><br>
+
+<div id="watched">
+    {% for t in titles %}
+        <label>
+            <input type="checkbox" value="{{ t }}"> {{ t }}
+        </label><br>
+    {% endfor %}
+</div>
+
+
+<br><br>
+<button onclick="getRecommendations()">Get Recommendations</button>
+
+<hr>
+
+<div id="results"></div>
+
+<script>
+function getRecommendations() {
+    let genres = Array.from(
+        document.querySelectorAll("#genres input:checked")
+    ).map(cb => cb.value);
+
+    let titles = Array.from(
+    document.querySelectorAll("#watched input:checked")
+).map(cb => cb.value);
+
+    fetch("/recommend", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            genres: genres,
+            titles: titles
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        let output = "";
+        data.forEach(d => {
+            output += `
+            <div class="card">
+                <h3>${d.title}</h3>
+                <strong>${d.similarity}% match</strong>
+                <p>${d.synopsis}</p>
+                <small>${d.tropes}</small>
+            </div>
+            `;
+        });
+        document.getElementById("results").innerHTML = output;
+    });
+}
+</script>
+
+</body>
+</html>
