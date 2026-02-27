@@ -134,4 +134,4 @@ User experience design for discovery systems
 
 Author
 Adrija
-GitHub: https://github.com/adrija200524
+GitHub: https://github.com/adrijatarafder
