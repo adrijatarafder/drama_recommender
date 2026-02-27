@@ -127,12 +127,6 @@ Human-centered AI
 Cold-start problem handling
 Explainable AI
 User experience design for discovery systems
-💡 Unique Aspects
-Unlike traditional recommendation platforms, this system emphasizes:
-Moment-based preferences
-Minimal user effort
-Transparent reasoning
-Flexible architecture for future growth
 📌 Current Status
 ✅ Local prototype complete
 ✅ Recommendation logic implemented
